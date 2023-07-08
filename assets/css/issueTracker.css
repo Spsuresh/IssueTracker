@@ -1,0 +1,67 @@
+main {
+    margin: 0;
+    background-color:#c8dae2;
+    height: auto;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.mainProject {
+    padding: 20px 0;
+    margin: 20px 50px;
+}
+
+.project {
+    margin: 10px;
+    padding: 25px;
+    width: auto;
+    height: 200px;
+
+    color: whitesmoke;
+    background-color:#93c6cb;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  
+  border-width: 2px 2px;
+  border-radius: 40px 0px 0px 10px;
+}
+
+.project h1{
+    font-size: 1.5rem;
+}
+
+.project p{
+    font-size: 1.5rem;
+}
+
+#addProject,
+#noProject {
+    margin: 10px;
+    width: 300px;
+    height: 200px;
+    background-color: transparent;
+    box-shadow: none;
+    box-shadow: 0 0 2px #777;
+    color:#333933;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    border-radius: 0.5rem;
+    text-decoration: none;
+}
+
+
+#addProject:hover {
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px #333;
+    color: #333;
+}

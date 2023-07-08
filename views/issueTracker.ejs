@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="/css/issueTracker.css">
+
+<main class="mainProject">
+    <a href="/issueTracker/createProject" id="addProject">
+        <span>
+            <i class="fa-solid fa-file-circle-plus fa-lg"></i> Create New Project
+        </span>
+    </a>
+
+    <% if (!addedProject) { %>
+        <div id="noProject">
+            <span>
+                <i class="fa-solid fa-file-excel fa-lg"></i> No Project Added
+            </span>
+        </div>
+    <% } else { %>
+        <% for (let project of addedProject) { %>
+            <div href="#" class="project">
+                <h1>
+                    <%= project.projectName %>
+                </h1>
+                <p>- <%= project.authorName %></p>
+            </div>
+        <% } %>
+    <% } %>
+</main>
