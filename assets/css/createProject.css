@@ -1,0 +1,11 @@
+.createProjectSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #bec5cd;
+    padding: 25px 0;
+}
+
+.createProjectForm {
+    min-width: 500px;
+}

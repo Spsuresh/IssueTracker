@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/css/projectDetails.css">
+
+
+<section id="filter">
+  <form id="navbar" action="/issueTracker/filterProjectDetails/" method="post">
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="flexRadio" value="Project Title" id="flexRadio1" required>
+      <label class="form-check-label" for="flexRadio1">Project Title</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="flexRadio" value="Project Description" id="flexRadio2" required>
+      <label class="form-check-label" for="flexRadio2">Project Description</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="flexRadio" value="Project Author" id="flexRadio3" required>
+      <label class="form-check-label" for="flexRadio3">Project Author</label>
+    </div>
+    <button type="submit" class="btn btn-primary" style="color: rgb(234, 241, 238); background-color: rgba(20, 20, 20, 0.438);">Filter</button>
+  </form>
+</section>
+
+<main class="projectDetailsMain">
+  <% for (let project of projectDetails) { %>
+    <div href="#" class="project">
+      <h1><%= project.projectName %></h1>
+      <p>- <%= project.authorName %></p>
+    </div>
+  <% } %>
+</main>
