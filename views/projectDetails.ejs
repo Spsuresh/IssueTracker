@@ -1,29 +1,53 @@
 <link rel="stylesheet" href="/css/projectDetails.css">
 
-
 <section id="filter">
-  <form id="navbar" action="/issueTracker/filterProjectDetails/" method="post">
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadio" value="Project Title" id="flexRadio1" required>
-      <label class="form-check-label" for="flexRadio1">Project Title</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadio" value="Project Description" id="flexRadio2" required>
-      <label class="form-check-label" for="flexRadio2">Project Description</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="flexRadio" value="Project Author" id="flexRadio3" required>
-      <label class="form-check-label" for="flexRadio3">Project Author</label>
-    </div>
-    <button type="submit" class="btn btn-primary" style="color: rgb(234, 241, 238); background-color: rgba(20, 20, 20, 0.438);">Filter</button>
-  </form>
+    <form id="navbar" action="/issueTracker/filterProjectDetails/" method="post">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadio" value="Project Title" id="flexRadio1" required>
+            <label class="form-check-label" for="flexRadio1">Project Title</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadio" value="Project Description" id="flexRadio2" required>
+            <label class="form-check-label" for="flexRadio2">Project Description</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadio" value="Project Author" id="flexRadio3" required>
+            <label class="form-check-label" for="flexRadio3">Project Author</label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="color:rgb(234, 241, 238);background-color: rgba(20, 20, 20, 0.438);">Filter</button>
+    </form>
 </section>
 
 <main class="projectDetailsMain">
-  <% for (let project of projectDetails) { %>
-    <div href="#" class="project">
-      <h1><%= project.projectName %></h1>
-      <p>- <%= project.authorName %></p>
-    </div>
-  <% } %>
+    <% for(let project of projectDetails) { %>
+        <div href="#" class="projectDetailsDiv">
+            <h1>
+                <%= project.projectName %>
+            </h1>
+            <small>
+                <%= project.description %>
+            </small>
+            <p class="my-3">- <%= project.authorName %></p>
+
+            <% if(project.bugs) { %>
+                <div id="bugBox">
+                    <h1 class="text-center" id="bugfound"><i class="fa-solid fa-bug"></i> Bug Faced</h1>
+
+                    <% for(let bug of project.bugs) { %>
+                        <div>
+                            <p><%= bug.issueName %></p>
+                            <small style="margin: 5px 0;"><%= bug.issueDescription %></small>
+                            <i style="display: block;margin: 5px 0;">- <%= bug.authorName %></i>
+                        </div>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <div id="bugBox">
+                    <h1 class="text-center" id="nobug"><i class="fa-solid fa-bug-slash"></i> No Bug Faced</h1>
+                </div>
+            <% } %>
+
+            <a href="/issueTracker/createAnIssue/<%= project._id %>" type="button" class="btn mt-4" style="background-color: rgb(250, 20, 20); color: azure;">+ Raise an Issue</a>
+        </div>
+    <% } %>
 </main>
