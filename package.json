@@ -1,7 +1,7 @@
 {
   "name": "issue-tracker",
   "version": "1.0.0",
-  "description": "Skill Test",
+  "description": "commit Skill Test",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
