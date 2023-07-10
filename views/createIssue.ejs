@@ -1,26 +1,19 @@
-<link rel="stylesheet" href="/css/issueTracker.css">
+<link rel="stylesheet" href="/css/createProject.css">
 
-<main class="mainProject">
-    <a href="/issueTracker/createIssues" id="addProject">
-        <span>
-            <i class="fa-solid fa-file-circle-plus fa-lg"></i> Issue Project
-        </span>
-    </a>
-
-    <% if (!addedProject) { %>
-        <div id="noProject">
-            <span>
-                <i class="fa-solid fa-file-excel fa-lg"></i> No Project Added
-            </span>
-        </div>
-    <% } else { %>
-        <% for (let project of addedProject) { %>
-            <div href="#" class="project">
-                <h1>
-                    <%= project.projectName %>
-                </h1>
-                <p>- <%= project.authorName %></p>
-            </div>
-        <% } %>
-    <% } %>
-</main>
+<section class="createProjectSection">
+  <form class="createProjectForm" action="/issueTracker/createAnIssue/<%= issueId.id %>/addIssue" method="post">
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Issue Title</label>
+      <input type="text" name="issueName" class="form-control" id="exampleFormControlInput1" placeholder="Enter Issue Title">
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Issue Description</label>
+      <textarea name="issueDescription" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter Issue Description"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Issue Author</label>
+      <input type="text" name="authorName" class="form-control" id="exampleFormControlInput1" placeholder="Enter Author Name">
+    </div>
+    <button type="submit" class="btn btn-danger w-100 my-3">Create Issue</button>
+  </form>
+</section>
