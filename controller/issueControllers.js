@@ -1,15 +1,15 @@
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require("mongodb");
 const mongoDB = require("../database/mongodb");
 
 async function filterBy(filter, projectDetails) {
   switch (filter) {
-    case 'Title':
+    case "Title":
       projectDetails.sort((a, b) => a.projectName.localeCompare(b.projectName));
       break;
-    case 'Description':
+    case "Description":
       projectDetails.sort((a, b) => a.description.localeCompare(b.description));
       break;
-    case 'Author':
+    case "Author":
       projectDetails.sort((a, b) => a.authorName.localeCompare(b.authorName));
       break;
     default:
@@ -20,98 +20,84 @@ async function filterBy(filter, projectDetails) {
 
 module.exports = {
   issueTrackerPage: async (req, res) => {
-    try {
-      const collection = await mongoDB();
-      const addedProject = await collection.find({ id: 'addedProject' }).toArray();
-      return res.render('issueTracker', {
-        title: 'Issue Tracker',
-        addedProject,
-      });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).send('Internal Server Error');
-    }
+    const collection = await mongoDB();
+    const addedProject = await collection
+      .find({ id: "addedProject" })
+      .toArray();
+    return res.render("issueTracker", {
+      title: "Issue Tracker",
+      addedProject,
+    });
   },
 
   createProject: (req, res) => {
-    return res.render('createProject', {
-      title: 'Create Project',
+    return res.render("createProject", {
+      title: "Create Project",
     });
   },
 
   addProjectToMongoDB: async (req, res) => {
-    try {
-      let formData = req.body;
-      formData = { ...formData, id: 'addedProject' };
-      const collection = await mongoDB();
-      await collection.insertOne(formData);
-      console.log('Data inserted');
-      return res.redirect('/issueTracker');
-    } catch (err) {
-      console.error(err);
-      return res.status(500).send('Internal Server Error');
-    }
+    let formData = req.body;
+    formData = { ...formData, id: "addedProject" };
+    const collection = await mongoDB();
+    collection.insertOne(formData, (err, data) => {
+      if (err) {
+        throw err;
+      } else if (data) {
+        console.log("Data inserted");
+      }
+    });
+    res.redirect("/issueTracker");
   },
 
   projectDetails: async (req, res) => {
-    try {
-      const collection = await mongoDB();
-      const projectDetails = await collection.find({ id: 'addedProject' }).toArray();
-      return res.render('projectDetails', {
-        title: 'Project Details',
-        projectDetails,
-      });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).send('Internal Server Error');
-    }
+    const collection = await mongoDB();
+    let projectDetails = await collection
+      .find({ id: "addedProject" })
+      .toArray();
+    return res.render("projectDetails", {
+      title: "Project Details",
+      projectDetails,
+    });
   },
 
   filterProjectDetails: async (req, res) => {
-    try {
-      const collection = await mongoDB();
-      let projectDetails = await collection.find({ id: 'addedProject' }).toArray();
-      const filterReq = req.body;
+    const collection = await mongoDB();
+    let projectDetails = await collection
+      .find({ id: "addedProject" })
+      .toArray();
+    const filterReq = req.body;
 
-      if (filterReq.flexRadio === 'Project Title') {
-        projectDetails = await filterBy('Title', projectDetails);
-      } else if (filterReq.flexRadio === 'Project Description') {
-        projectDetails = await filterBy('Description', projectDetails);
-      } else if (filterReq.flexRadio === 'Project Author') {
-        projectDetails = await filterBy('Author', projectDetails);
-      }
-
-      return res.render('projectDetails', {
-        title: 'Project Details',
-        projectDetails,
-      });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).send('Internal Server Error');
+    if (filterReq.flexRadio === "Project Title") {
+      projectDetails = await filterBy("Title", projectDetails);
+    } else if (filterReq.flexRadio === "Project Description") {
+      projectDetails = await filterBy("Description", projectDetails);
+    } else if (filterReq.flexRadio === "Project Author") {
+      projectDetails = await filterBy("Author", projectDetails);
     }
+
+    return res.render("projectDetails", {
+      title: "Project Details",
+      projectDetails,
+    });
   },
 
   createAnIssue: async (req, res) => {
-    const issueId = req.params;
-    return res.render('createIssue', {
-      title: 'Create Issue',
+    const issueId = req.params.id;
+    return res.render("createIssue", {
+      title: "Create Issue",
       issueId,
     });
   },
 
   addAnIssue: async (req, res) => {
-    try {
-      const issue = req.body;
-      const bugId = req.params.id;
-      const collection = await mongoDB();
-      await collection.findOneAndUpdate(
-        { _id: ObjectId(bugId) },
-        { $push: { bugs: issue } }
-      );
-      return res.redirect('/issueTracker/projectDetails');
-    } catch (err) {
-      console.error(err);
-      return res.status(500).send('Internal Server Error');
-    }
+    const issue = req.body;
+    const bugId = req.params.id;
+    const collection = await mongoDB();
+    await collection.findOneAndUpdate(
+      { _id: ObjectId(bugId) },
+      { $push: { bugs: issue } }
+    );
+    res.redirect("/issueTracker/projectDetails");
   },
 };
