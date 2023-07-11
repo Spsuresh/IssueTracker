@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
   issueTrackerPage,
@@ -7,15 +7,15 @@ const {
   projectDetails,
   filterProjectDetails,
   createAnIssue,
-  addAnIssue
+  addAnIssue,
 } = require("../controller/issueControllers");
 
-router.get('/', issueTrackerPage);
-router.get('/createProject', createProject);
-router.post('/addProject', addProjectToMongoDB);
-router.get('/projectDetails', projectDetails);
-router.post('/filterProjectDetails', filterProjectDetails);
-router.get('/createAnIssue/:id', createAnIssue);
-router.post('/createAnIssue/:id/addIssue', addAnIssue);
+router.get("/", issueTrackerPage);
+router.get("/createProject", createProject);
+router.post("/addProject", addProjectToMongoDB);
+router.get("/projectDetails", projectDetails);
+router.post("/filterProjectDetails", filterProjectDetails);
+router.get("/createAnIssue/:id", createAnIssue);
+router.post("/createAnIssue/:id/addIssue", addAnIssue);
 
 module.exports = router;
